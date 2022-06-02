@@ -2,7 +2,6 @@ require("dotenv").config();
 require("express-async-errors");
 
 // node express mongoose
-const path = require("path");
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -13,17 +12,22 @@ const fileUpload = require("express-fileupload");
 // custom stuff
 const notFound = require("./middleware/not-found-MW");
 const errorHandler = require("./middleware/error-handler-MW");
+const router = require("./routes/router");
 
+// general middleware
 app.use(express.json());
 app.use(fileUpload({ useTempFiles: true }));
 
+// routes
 app.get("/api/v1", (req, res) => {
   res.send("Hallo from the backend");
 });
 
+app.use("/api/v1/collections", router);
+
 // error handling middleware
-app.use(notFound);
 app.use(errorHandler);
+app.use(notFound);
 
 const port = process.env.PORT || 4000;
 

@@ -6,6 +6,13 @@ const errorHandler = (err, req, res, next) => {
     msg: err.message || "Something went wrong, try again later",
   };
 
+  if (err.name === "CastError") {
+    customError = {
+      statusCode: StatusCodes.BAD_REQUEST,
+      msg: `Can't find ${err.kind}: ${err.value}`,
+    };
+  }
+
   if (err.name === "ValidationError") {
     customError = {
       statusCode: StatusCodes.BAD_REQUEST,
@@ -14,7 +21,16 @@ const errorHandler = (err, req, res, next) => {
         .join(", "),
     };
   }
-  res.status(customError.statusCode).json({ msg: customError.msg });
+
+  if (err.code === "MODULE_NOT_FOUND") {
+    customError = {
+      statusCode: StatusCodes.BAD_REQUEST,
+      msg: `There is no such collection in DB`,
+    };
+  }
+
+  console.log(err.message);
+  res.status(customError.statusCode).json({ msg: customError.msg, err });
 };
 
 module.exports = errorHandler;
