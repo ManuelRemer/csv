@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { useFetch } from "./hooks/useFetch";
+import "./App.css";
+
+import Input from "./components/Input";
 
 function App() {
+  const { data, isPending, error, postData, postFile } = useFetch(
+    "api/v1/collections/people/check"
+  );
+
+  const {
+    data: data2,
+    isPending: isPending2,
+    error: error2,
+    postData: postData2,
+    postFile: postFile2,
+  } = useFetch("api/v1/collections/people/csv");
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Input type="file" label="select a file" handleInput={postFile} />
+      {/* {data && (
+        <button onClick={() => postData2({ tempFilePath: data.tempFilePath })}>
+          Hallo
+        </button>
+      )} */}
     </div>
   );
 }

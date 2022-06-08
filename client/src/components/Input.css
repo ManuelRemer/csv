@@ -1,0 +1,23 @@
+.file-upload {
+  display: flex;
+}
+
+label {
+  margin: 10px 0;
+  display: flex;
+}
+
+input {
+  border: 2px solid;
+  border-radius: 4px;
+  font-size: 1em;
+  padding: 8px 6px;
+  color: var(--dark);
+}
+
+input[type="file"] {
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+}
