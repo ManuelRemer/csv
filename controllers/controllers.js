@@ -11,6 +11,8 @@ const csvFromDatabase = require("./utils/csvFromDatabase");
 const addCsv = async (req, res) => {
   const { tempFilePath } = req.body;
   const { model } = req;
+  console.log("server: ", tempFilePath);
+
   if (!existsSync(tempFilePath)) {
     throw new Error(`Temporary File does not exist: ${tempFilePath}`);
   }

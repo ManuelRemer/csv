@@ -7,11 +7,19 @@ export const useFetch = (url, method) => {
   const [options, setOptions] = useState(null);
 
   const postData = (postData) => {
-    console.log("hi");
     setOptions({
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(postData),
+    });
+  };
+
+  const postFile = (file) => {
+    console.log(file);
+    setOptions({
+      method: "POST",
+      // headers: { "Content-Type": "multipart/form-data" },
+      body: file,
     });
   };
 
@@ -26,6 +34,7 @@ export const useFetch = (url, method) => {
           ...fetchOptions,
           signal: controller.signal,
         });
+
         const dataFromJson = await res.json();
 
         if (!res.ok) {
@@ -58,5 +67,5 @@ export const useFetch = (url, method) => {
     };
   }, [url, options, method]);
 
-  return { data, isPending, error, postData };
+  return { data, isPending, error, postData, postFile };
 };
